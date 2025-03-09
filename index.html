@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Short Video Feed</title>
+    <style>
+        body {
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background-color: #000;
+            color: white;
+            overflow-x: hidden;
+        }
+        .video-container {
+            width: 100%;
+            max-width: 400px;
+            height: 600px;
+            overflow: hidden;
+            margin: 10px 0;
+        }
+        iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+    </style>
+</head>
+<body>
+    <div id="videoFeed"></div>
+
+    <script>
+        const videoLinks = [
+            "https://www.youtube.com/embed/VIDEO_ID_1",
+            "https://www.youtube.com/embed/VIDEO_ID_2",
+            "https://www.instagram.com/reel/VIDEO_ID_3/embed",
+            "https://www.instagram.com/reel/DFnQNCuyimS/?igsh=MWRienF2OThlcG1zYg==/embed"
+        ];
+
+        function shuffle(array) {
+            return array.sort(() => Math.random() - 0.5);
+        }
+
+        function loadVideos() {
+            let feed = document.getElementById('videoFeed');
+            shuffle(videoLinks).forEach(link => {
+                let div = document.createElement('div');
+                div.classList.add('video-container');
+                div.innerHTML = `<iframe src="${link}" allowfullscreen></iframe>`;
+                feed.appendChild(div);
+            });
+        }
+
+        function handleScroll() {
+            if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 50) {
+                loadVideos();
+            }
+        }
+
+        document.addEventListener('scroll', handleScroll);
+        loadVideos();
+    </script>
+</body>
+</html>
